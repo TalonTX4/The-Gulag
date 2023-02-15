@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://Joseph:h0ZbbHX93wJnsHkH@devconnector.zivcazy.mongodb.net/?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://Joseph:h0ZbbHX93wJnsHkH@devconnector.zivcazy.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "aloneattheedgeofauniversehummingatune"
 }
