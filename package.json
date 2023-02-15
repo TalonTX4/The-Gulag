@@ -1,0 +1,14 @@
+{
+  "name": "devconnector",
+  "version": "1.0.0",
+  "description": "Social Network to improve code competence",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joseph Paier",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
