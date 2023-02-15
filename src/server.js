@@ -9,6 +9,13 @@ connectDB()
 
 app.get("/", (req, res) => res.send("API running"))
 
+// define routes
+//NOTE this is the good way to pass app to api lol
+app.use("/api/users", require("./routes/api/users"))
+app.use("/api/auth", require("./routes/api/auth"))
+app.use("/api/profile", require("./routes/api/profile"))
+app.use("/api/posts", require("./routes/api/posts"))
+
 // use environment port or 5000
 const PORT = process.env.PORT || 5000
 
