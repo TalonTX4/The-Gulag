@@ -1,3 +1,4 @@
 node_modules/
 .idea/
 .IDE stuff/
+/.prettierrc.json
