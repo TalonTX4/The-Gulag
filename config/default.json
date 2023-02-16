@@ -1,4 +1,7 @@
 {
   "mongoURI": "mongodb+srv://Joseph:h0ZbbHX93wJnsHkH@devconnector.zivcazy.mongodb.net/?retryWrites=true&w=majority",
-  "jwtSecret": "aloneattheedgeofauniversehummingatune"
+  "jwtSecret": "aloneattheedgeofauniversehummingatune",
+
+  "authError": "invalid credentials",
+  "serverError": "Server Error"
 }

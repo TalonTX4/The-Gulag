@@ -19,7 +19,7 @@ router.post(
     check("email", "Please include a valid email").isEmail(),
     check(
       "password",
-      "Please enter a password with 2 or more characters",
+      "Please enter a password with 2 or more characters"
     ).isLength({ min: 2 }),
   ],
   async (req, res) => {
@@ -72,12 +72,12 @@ router.post(
         (err, token) => {
           if (err) throw err
           res.json({ token })
-        },
+        }
       )
     } catch (err) {
       console.error(err.message)
-      res.status(500).send("server error")
+      res.status(500).send(config.get("serverError"))
     }
-  },
+  }
 )
 module.exports = router

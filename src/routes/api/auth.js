@@ -17,18 +17,18 @@ router.get("/", jwtVerify, async (req, res) => {
     res.json(user)
   } catch (err) {
     console.error(err.message)
-    res.status(500).send("Server Error")
+    res.status(500).send(config.get("serverError"))
   }
 })
 
 // @route  : POST api/auth
-// @desc   : authenticate user & get token
+// @desc   : Authenticate user & get token
 // @access : public
 router.post(
   "/",
   [
     check("email", "Please include a valid email").isEmail(),
-    check("password", "password is required").exists(),
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req)
@@ -43,7 +43,7 @@ router.post(
 
       if (!user) {
         return res.status(400).json({
-          error: [{ msg: "invalid credentials" }],
+          error: [{ msg: config.get("authError") }],
         })
       }
 
@@ -51,7 +51,7 @@ router.post(
 
       if (!isMatch) {
         return res.status(400).json({
-          error: [{ msg: "invalid credentials" }],
+          error: [{ msg: config.get("authError") }],
         })
       }
 
@@ -70,13 +70,13 @@ router.post(
         (err, token) => {
           if (err) throw err
           res.json({ token })
-        },
+        }
       )
     } catch (err) {
       console.error(err.message)
-      res.status(500).send("server error")
+      res.status(500).send(config.get("serverError"))
     }
-  },
+  }
 )
 
 module.exports = router
