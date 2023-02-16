@@ -45,6 +45,51 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
     }
+
+    //TODO make all this into a recursive function
+
+    const {
+      company,
+      website,
+      location,
+      bio,
+      status,
+      githubUsername,
+      skills,
+      youtube,
+      facebook,
+      twitter,
+      instagram,
+      linkedin,
+    } = req.body
+
+    // build profile object
+    const profileFields = {}
+    profileFields.user = req.user.id
+
+    if (company) profileFields.company = company
+    if (website) profileFields.website = website
+    if (location) profileFields.location = location
+    if (bio) profileFields.bio = bio
+    if (status) profileFields.status = status
+    if (githubUsername) profileFields.githubUsername = githubUsername
+    if (skills) {
+      profileFields.skills = skills.split(",").map((skill) => skill.trim())
+    }
+
+    // build social object
+    profileFields.social = {}
+    if (youtube) profileFields.social.youtube = youtube
+    if (facebook) profileFields.social.facebook = facebook
+    if (twitter) profileFields.social.twitter = twitter
+    if (instagram) profileFields.social.instagram = instagram
+    if (linkedin) profileFields.social.linkedin = linkedin
+
+    try {
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send(config.get("serverError"))
+    }
   }
 )
 
