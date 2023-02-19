@@ -119,13 +119,36 @@ router.post(
 
 router.get("/", async (req, res) => {
   try {
-    const userProfile = await Profile.find().populate("user", [
+    const userProfiles = await Profile.find().populate("user", [
       "name",
       "avatar",
     ])
+    res.json(userProfiles)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send(config.get("serverError"))
+  }
+})
+
+// @route  : GET api/profile/user/:user_id
+// @desc   : Get profile by user id
+// @access : private
+
+router.get("/user/:user_id", async (req, res) => {
+  try {
+    const userProfile = await Profile.findOne({
+      user: req.params.user_id,
+    }).populate("user", ["name", "avatar"])
+
+    if (!userProfile)
+      return res.status(400).json({ msg: "there is no profile for this user" })
+
     res.json(userProfile)
   } catch (err) {
     console.error(err.message)
+    if (err.kind === "objectId") {
+      return res.status(400).json({ msg: "profile not found" })
+    }
     res.status(500).send(config.get("serverError"))
   }
 })
