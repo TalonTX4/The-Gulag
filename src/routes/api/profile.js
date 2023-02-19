@@ -124,7 +124,7 @@ router.get("/", async (req, res) => {
       "avatar",
     ])
     res.json(userProfile)
-  } catch {
+  } catch (err) {
     console.error(err.message)
     res.status(500).send(config.get("serverError"))
   }
