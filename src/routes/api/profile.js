@@ -85,7 +85,27 @@ router.post(
     if (instagram) profileFields.social.instagram = instagram
     if (linkedin) profileFields.social.linkedin = linkedin
 
+    //NOTE changed profile to userProfile to clear ambiguity with Profile
+
     try {
+      let userProfile = await Profile.findOne({ user: req.user.id })
+
+      if (userProfile) {
+        // Update
+        userProfile = await Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profileFields },
+          { new: true }
+        )
+
+        return res.json(userProfile)
+      }
+
+      //create
+      userProfile = new Profile(profileFields)
+
+      await userProfile.save()
+      return res.json(userProfile)
     } catch (err) {
       console.error(err.message)
       res.status(500).send(config.get("serverError"))
