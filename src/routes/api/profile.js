@@ -46,7 +46,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    //TODO make all this into a recursive function
+    //TODO make all this into a iterative function
 
     const {
       company,
@@ -169,5 +169,55 @@ router.get("/", jwtVerify, async (req, res) => {
     res.status(500).send(config.get("serverError"))
   }
 })
+
+// TODO dry checks in experience
+// TODO update experience route
+
+// @route  : PUT api/profile/experience
+// @desc   : Add profile experience
+// @access : Private
+router.put(
+  "/experience",
+  [
+    jwtVerify,
+    [
+      check("title", "title is required").not().isEmpty(),
+      check("company", "company is required").not().isEmpty(),
+      check("from", "from date is required").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const { title, company, location, from, to, current, description } =
+      req.body
+
+    const newExp = {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description,
+    }
+
+    try {
+      const profile = await Profile.findOne({ user: req.user.id })
+
+      profile.experience.unshift(newExp)
+
+      await profile.save
+
+      res.json(profile)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send(config.get("serverError"))
+    }
+  }
+)
 
 module.exports = router
