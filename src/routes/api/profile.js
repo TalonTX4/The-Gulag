@@ -243,4 +243,77 @@ router.delete("/experience/:exp_id", jwtVerify, async (req, res) => {
   }
 })
 
+//TODO merge education and experience into 2 functions for inserting into an array field and deleting from one
+
+// @route  : PUT api/profile/education
+// @desc   : Add profile education
+// @access : Private
+router.put(
+  "/education",
+  [
+    jwtVerify,
+    [
+      check("school", "school is required").not().isEmpty(),
+      check("degree", "degree is required").not().isEmpty(),
+      check("fieldOfStudy", "field of study is required").not().isEmpty(),
+      check("from", "from date is required").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const { school, degree, fieldOfStudy, from, to, current, description } =
+      req.body
+
+    const newEdu = {
+      school,
+      degree,
+      fieldOfStudy,
+      from,
+      to,
+      current,
+      description,
+    }
+
+    try {
+      const profile = await Profile.findOne({ user: req.user.id })
+
+      profile.education.unshift(newEdu)
+
+      await profile.save
+
+      res.json(profile)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send(config.get("serverError"))
+    }
+  }
+)
+
+// @route  : DELETE api/profile/education/:edu_id
+// @desc   : delete a profile education
+// @access : Private
+router.delete("/education/:edu_id", jwtVerify, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+
+    // Get remove index
+    const removeIndex = profile.education
+      .map((item) => item.id)
+      .indexOf(req.params.edu_id)
+
+    profile.education.splice(removeIndex, 1)
+
+    await profile.save()
+
+    res.json(profile)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send(config.get("serverError"))
+  }
+})
+
 module.exports = router
