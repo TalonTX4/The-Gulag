@@ -21,6 +21,8 @@ router.get("/me", jwtVerify, async (req, res) => {
     if (!profile) {
       return res.status(400).json({ msg: "there is no profile for this user" })
     }
+
+    res.json(profile)
   } catch (err) {
     console.error(err.message)
     res.status(500).send(config.get("serverError"))
