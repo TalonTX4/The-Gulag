@@ -15,6 +15,17 @@ class errorHandler {
     }
     res.status(500).send(config.get("errorResponses.serverError"))
   }
+
+  // For use in if statement pertaining to user authentication
+  static authError(res) {
+    return res.status(400).json({
+      error: [{ msg: config.get("errorResponses.authError") }],
+    })
+  }
+
+  static notFound(res, ObjectName) {
+    res.status(404).json({ msg: `${ObjectName} not found` })
+  }
 }
 
 module.exports = errorHandler
