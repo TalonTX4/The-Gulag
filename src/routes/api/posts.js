@@ -60,9 +60,7 @@ router.get("/:id", jwtVerify, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
 
-    if (!post) {
-      return res.status(404).json({ msg: "post not found" })
-    }
+    if (!post) return errorHandler.notFound(res, "Post")
 
     res.json(post)
   } catch (err) {
@@ -77,9 +75,7 @@ router.delete("/:id", jwtVerify, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
 
-    if (!post) {
-      return res.status(404).json({ msg: "Post not found" })
-    }
+    if (!post) return errorHandler.notFound(res, "Post")
 
     // Check user
     if (post.user.toString() !== req.user.id) {
@@ -195,9 +191,7 @@ router.delete("/comments/:id/:comment_id", jwtVerify, async (req, res) => {
 
     //check if comment exists
 
-    if (!comment) {
-      return res.status(404).json({ msg: "Comment not found" })
-    }
+    if (!comment) return errorHandler.notFound(res, "Comment")
 
     // Check user
     if (comment.user.toString() !== req.user.id) {

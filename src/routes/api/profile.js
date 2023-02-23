@@ -20,9 +20,7 @@ router.get("/me", jwtVerify, async (req, res) => {
       ["name", "avatar"]
     )
 
-    if (!profile) {
-      return res.status(400).json({ msg: "there is no profile for this user" })
-    }
+    if (!profile) return errorHandler.notFound(res, "Profile")
 
     res.json(profile)
   } catch (err) {
@@ -139,8 +137,7 @@ router.get("/user/:user_id", async (req, res) => {
       user: req.params.user_id,
     }).populate("user", ["name", "avatar"])
 
-    if (!userProfile)
-      return res.status(400).json({ msg: "there is no profile for this user" })
+    if (!userProfile) return errorHandler.notFound(res, "Profile")
 
     res.json(userProfile)
   } catch (err) {
@@ -326,9 +323,8 @@ router.get("/github/:username", (req, res) => {
     request(options, (error, response, body) => {
       if (error) console.error(error)
 
-      if (response.statusCode !== 200) {
-        return res.status(404).json({ msg: "No GitHub Profile found" })
-      }
+      if (response.statusCode !== 200)
+        return errorHandler.notFound(res, "GitHub Profile")
 
       res.json(JSON.parse(body))
     })
