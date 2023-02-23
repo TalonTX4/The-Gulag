@@ -23,10 +23,12 @@ class errorHandler {
     })
   }
 
+  // generic 404 error
   static notFound(res, ObjectName) {
     res.status(404).json({ msg: `${ObjectName} not found` })
   }
 
+  // error return for express validator
   static validatorReturn(res, errors) {
     res.status(400).json({ errors: errors.array() })
   }
