@@ -102,4 +102,60 @@ router.delete("/:id", jwtVerify, async (req, res) => {
     res.status(500).send(config.get("serverError"))
   }
 })
+
+// @route  : PUT api/posts/like/:id
+// @desc   : like a post
+// @access : Private
+router.put("/like/:id", jwtVerify, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+    if (
+      post.likes.filter((like) => like.user.toString() === req.user.id).length >
+      0
+    ) {
+      return res.status(400)({ msg: "post already liked" })
+    }
+
+    post.likes.unshift({ user: req.user.id })
+
+    await post.save()
+
+    res.json(post.likes)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send(config.get("serverError"))
+  }
+})
+
+// @route  : PUT api/posts/unlike/:id
+// @desc   : unlike a post
+// @access : Private
+router.put("/unlike/:id", jwtVerify, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+    if (
+      post.likes.filter((like) => like.user.toString() === req.user.id)
+        .length === 0
+    ) {
+      return res.status(400)({ msg: "post has not yet been liked" })
+    }
+
+    // Get remove index
+    const removeIndex = post.likes
+      .map((like) => like.user.toString())
+      .indexOf(req.user.id)
+
+    post.likes.splice(removeIndex, 1)
+
+    await post.save()
+
+    res.json(post.likes)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send(config.get("serverError"))
+  }
+})
+
 module.exports = router
