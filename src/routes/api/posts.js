@@ -66,11 +66,7 @@ router.get("/:id", jwtVerify, async (req, res) => {
 
     res.json(post)
   } catch (err) {
-    console.error(err.message)
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "post not found" })
-    }
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverObjectId(res, err, "Post")
   }
 })
 
@@ -94,11 +90,7 @@ router.delete("/:id", jwtVerify, async (req, res) => {
 
     res.json({ msg: "post removed" })
   } catch (err) {
-    console.error(err.message)
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "post not found" })
-    }
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverObjectId(res, err, "Post")
   }
 })
 
@@ -223,11 +215,7 @@ router.delete("/comments/:id/:comment_id", jwtVerify, async (req, res) => {
 
     res.json(post.comments)
   } catch (err) {
-    console.error(err.message)
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "post not found" })
-    }
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverObjectId(res, err, "Comment")
   }
 })
 
