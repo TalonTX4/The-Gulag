@@ -32,7 +32,7 @@ router.post(
     try {
       let user = await User.findOne({ email })
 
-      if (user) return errorHandler.authError()
+      if (user) return errorHandler.authError(res)
 
       const avatar = gravatar.url(email, {
         s: "200",

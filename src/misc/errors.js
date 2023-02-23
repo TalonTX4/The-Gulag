@@ -32,6 +32,10 @@ class errorHandler {
   static validatorReturn(res, errors) {
     res.status(400).json({ errors: errors.array() })
   }
+
+  static generic(res, message) {
+    res.status(400).json({ msg: `errorResponses.misc.${message}` })
+  }
 }
 
 module.exports = errorHandler

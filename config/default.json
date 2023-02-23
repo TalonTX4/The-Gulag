@@ -6,6 +6,10 @@
 
   "errorResponses": {
     "authError": "invalid credentials",
-    "serverError": "Server Error"
+    "serverError": "Server Error",
+    "misc": {
+      "postUnlike": "post has not yet been liked",
+      "postLike": "post already liked"
+    }
   }
 }

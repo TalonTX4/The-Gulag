@@ -17,9 +17,7 @@ router.post(
   [jwtVerify, [check("text", "text is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
+    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
 
     try {
       const user = await User.findById(req.user.id).select("-password")
@@ -78,9 +76,7 @@ router.delete("/:id", jwtVerify, async (req, res) => {
     if (!post) return errorHandler.notFound(res, "Post")
 
     // Check user
-    if (post.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "User not authorized" })
-    }
+    if (post.user.toString() !== req.user.id) return errorHandler.authError(res)
 
     await post.remove()
 
@@ -100,9 +96,8 @@ router.put("/like/:id", jwtVerify, async (req, res) => {
     if (
       post.likes.filter((like) => like.user.toString() === req.user.id).length >
       0
-    ) {
-      return res.status(400)({ msg: "post already liked" })
-    }
+    )
+      return errorHandler.generic(res, "postLike")
 
     post.likes.unshift({ user: req.user.id })
 
@@ -124,9 +119,8 @@ router.put("/unlike/:id", jwtVerify, async (req, res) => {
     if (
       post.likes.filter((like) => like.user.toString() === req.user.id)
         .length === 0
-    ) {
-      return res.status(400)({ msg: "post has not yet been liked" })
-    }
+    )
+      return errorHandler.generic(res, "postUnlike")
 
     // Get remove index
     const removeIndex = post.likes
@@ -192,9 +186,8 @@ router.delete("/comments/:id/:comment_id", jwtVerify, async (req, res) => {
     if (!comment) return errorHandler.notFound(res, "Comment")
 
     // Check user
-    if (comment.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "User not authorized" })
-    }
+    if (comment.user.toString() !== req.user.id)
+      return errorHandler.authError(res)
 
     // Get remove index
     const removeIndex = post.comments
