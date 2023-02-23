@@ -43,9 +43,7 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
+    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
 
     //TODO make all this into an iterative function
 
@@ -181,9 +179,7 @@ router.put(
   ],
   async (req, res) => {
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
+    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
 
     const { title, company, location, from, to, current, description } =
       req.body
@@ -252,9 +248,7 @@ router.put(
   ],
   async (req, res) => {
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
+    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
 
     const { school, degree, fieldOfStudy, from, to, current, description } =
       req.body

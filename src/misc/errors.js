@@ -26,6 +26,10 @@ class errorHandler {
   static notFound(res, ObjectName) {
     res.status(404).json({ msg: `${ObjectName} not found` })
   }
+
+  static validatorReturn(res, errors) {
+    res.status(400).json({ errors: errors.array() })
+  }
 }
 
 module.exports = errorHandler
