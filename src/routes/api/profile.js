@@ -7,7 +7,6 @@ const { check, validationResult } = require("express-validator")
 
 const Profile = require("../../../models/Profile")
 const User = require("../../../models/User")
-const { response } = require("express")
 const request = require("request")
 
 // @route  : GET api/profile/me
@@ -50,7 +49,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    //TODO make all this into a iterative function
+    //TODO make all this into an iterative function
 
     const {
       company,
