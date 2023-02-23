@@ -7,6 +7,7 @@ const Profile = require("../../../models/Profile")
 const User = require("../../../models/User")
 const Post = require("../../../models/Post")
 const config = require("config")
+const errorHandler = require("../../misc/errors")
 
 // @route  : POST api/posts
 // @desc   : Create a post
@@ -34,8 +35,7 @@ router.post(
 
       res.json(post)
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(err, res)
     }
   }
 )
@@ -49,8 +49,7 @@ router.get("/", jwtVerify, async (req, res) => {
 
     res.json(posts)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -123,8 +122,7 @@ router.put("/like/:id", jwtVerify, async (req, res) => {
 
     res.json(post.likes)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -153,8 +151,7 @@ router.put("/unlike/:id", jwtVerify, async (req, res) => {
 
     res.json(post.likes)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -187,8 +184,7 @@ router.post(
 
       res.json(post.comments)
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )

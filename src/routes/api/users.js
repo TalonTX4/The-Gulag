@@ -8,6 +8,7 @@ const config = require("config")
 const jwt = require("jsonwebtoken")
 
 const User = require("../../../models/User")
+const errorHandler = require("../../misc/errors")
 
 // @route  : POST api/users
 // @desc   : register user
@@ -75,8 +76,7 @@ router.post(
         }
       )
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )

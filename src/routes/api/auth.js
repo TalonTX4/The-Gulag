@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken")
 const config = require("config")
 const { check, validationResult } = require("express-validator")
 const jwtVerify = require("../../middleware/jwtVerify")
+const errorHandler = require("../../misc/errors")
 
 // @route  : GET api/auth
 // @desc   : Test route
@@ -16,8 +17,7 @@ router.get("/", jwtVerify, async (req, res) => {
     const user = await User.findById(req.user.id).select("-password")
     res.json(user)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -73,8 +73,7 @@ router.post(
         }
       )
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )

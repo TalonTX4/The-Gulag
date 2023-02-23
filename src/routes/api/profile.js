@@ -8,6 +8,7 @@ const { check, validationResult } = require("express-validator")
 const Profile = require("../../../models/Profile")
 const User = require("../../../models/User")
 const request = require("request")
+const errorHandler = require("../../misc/errors")
 
 // @route  : GET api/profile/me
 // @desc   : get current users profile
@@ -25,8 +26,7 @@ router.get("/me", jwtVerify, async (req, res) => {
 
     res.json(profile)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -110,8 +110,7 @@ router.post(
       await userProfile.save()
       return res.json(userProfile)
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )
@@ -127,8 +126,7 @@ router.get("/", async (req, res) => {
     ])
     res.json(userProfiles)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -168,8 +166,7 @@ router.get("/", jwtVerify, async (req, res) => {
 
     res.json({ msg: "user deleted" })
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -217,8 +214,7 @@ router.put(
 
       res.json(profile)
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )
@@ -241,8 +237,7 @@ router.delete("/experience/:exp_id", jwtVerify, async (req, res) => {
 
     res.json(profile)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -290,8 +285,7 @@ router.put(
 
       res.json(profile)
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )
@@ -314,8 +308,7 @@ router.delete("/education/:edu_id", jwtVerify, async (req, res) => {
 
     res.json(profile)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
@@ -344,8 +337,7 @@ router.get("/github/:username", (req, res) => {
       res.json(JSON.parse(body))
     })
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
