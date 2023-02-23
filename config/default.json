@@ -4,6 +4,8 @@
   "githubClientId": "8e3827cfbeaab5d5e122",
   "githubSecret": "b3ce7d63349c8436d989b83d03870003f99a428b",
 
-  "authError": "invalid credentials",
-  "serverError": "Server Error"
+  "errorResponses": {
+    "authError": "invalid credentials",
+    "serverError": "Server Error"
+  }
 }
