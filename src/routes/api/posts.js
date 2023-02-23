@@ -3,10 +3,8 @@ const express = require("express")
 const { check, validationResult } = require("express-validator")
 const jwtVerify = require("../../middleware/jwtVerify")
 const router = express.Router()
-const Profile = require("../../../models/Profile")
 const User = require("../../../models/User")
 const Post = require("../../../models/Post")
-const config = require("config")
 const errorHandler = require("../../misc/errors")
 
 // @route  : POST api/posts
