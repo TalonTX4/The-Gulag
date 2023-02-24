@@ -6,12 +6,11 @@ const { check, validationResult } = require("express-validator")
 const bcrypt = require("bcryptjs")
 const config = require("config")
 const jwt = require("jsonwebtoken")
-
 const User = require("../../../models/User")
 const errorHandler = require("../../misc/errors")
 
 // @route  : POST api/users
-// @desc   : register user
+// @desc   : Register user
 // @access : public
 router.post(
   "/",

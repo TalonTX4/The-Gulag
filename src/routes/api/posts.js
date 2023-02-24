@@ -37,7 +37,7 @@ router.post(
 )
 
 // @route  : GET api/posts
-// @desc   : get all post
+// @desc   : Get all post
 // @access : Private
 router.get("/", jwtVerify, async (req, res) => {
   try {
@@ -50,7 +50,7 @@ router.get("/", jwtVerify, async (req, res) => {
 })
 
 // @route  : GET api/posts/:id
-// @desc   : get post by id
+// @desc   : Get post by id
 // @access : Private
 router.get("/:id", jwtVerify, async (req, res) => {
   try {
@@ -65,7 +65,7 @@ router.get("/:id", jwtVerify, async (req, res) => {
 })
 
 // @route  : DELETE api/posts/:id
-// @desc   : delete a post by id
+// @desc   : Delete a post by id
 // @access : Private
 router.delete("/:id", jwtVerify, async (req, res) => {
   try {
@@ -85,7 +85,7 @@ router.delete("/:id", jwtVerify, async (req, res) => {
 })
 
 // @route  : PUT api/posts/like/:id
-// @desc   : like a post
+// @desc   : Like a post
 // @access : Private
 router.put("/like/:id", jwtVerify, async (req, res) => {
   try {
@@ -108,7 +108,7 @@ router.put("/like/:id", jwtVerify, async (req, res) => {
 })
 
 // @route  : PUT api/posts/unlike/:id
-// @desc   : unlike a post
+// @desc   : Unlike a post
 // @access : Private
 router.put("/unlike/:id", jwtVerify, async (req, res) => {
   try {
@@ -136,7 +136,7 @@ router.put("/unlike/:id", jwtVerify, async (req, res) => {
 })
 
 // @route  : POST api/posts/comment/:id
-// @desc   : comment on a post
+// @desc   : Comment on a post
 // @access : Private
 router.post(
   "/comment/:id",
@@ -168,7 +168,7 @@ router.post(
 )
 
 // @route  : DELETE api/posts/comments/:id/:comment_id
-// @desc   : delete a post by id
+// @desc   : Delete a comment
 // @access : Private
 router.delete("/comments/:id/:comment_id", jwtVerify, async (req, res) => {
   try {

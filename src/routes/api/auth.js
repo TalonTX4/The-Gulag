@@ -10,8 +10,8 @@ const jwtVerify = require("../../middleware/jwtVerify")
 const errorHandler = require("../../misc/errors")
 
 // @route  : GET api/auth
-// @desc   : Test route
-// @access : public
+// @desc   : Get user by token
+// @access : Private
 router.get("/", jwtVerify, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password")
@@ -23,7 +23,7 @@ router.get("/", jwtVerify, async (req, res) => {
 
 // @route  : POST api/auth
 // @desc   : Authenticate user & get token
-// @access : public
+// @access : Public
 router.post(
   "/",
   [

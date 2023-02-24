@@ -11,8 +11,8 @@ const request = require("request")
 const errorHandler = require("../../misc/errors")
 
 // @route  : GET api/profile/me
-// @desc   : get current users profile
-// @access : private
+// @desc   : Get current users profile
+// @access : Private
 router.get("/me", jwtVerify, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id }).populate(
@@ -29,8 +29,8 @@ router.get("/me", jwtVerify, async (req, res) => {
 })
 
 // @route  : POST api/profile
-// @desc   : create or update user profile
-// @access : private
+// @desc   : Create or update user profile
+// @access : Private
 
 router.post(
   "/",
@@ -127,7 +127,7 @@ router.get("/user/:user_id", async (req, res) => {
 
 // @route  : DELETE api/profile
 // @desc   : Delete profile, user, and posts
-// @access : Public
+// @access : Private
 router.get("/", jwtVerify, async (req, res) => {
   try {
     // TODO - remove user posts
@@ -191,7 +191,7 @@ router.put(
 )
 
 // @route  : DELETE api/profile/experience/:exp_id
-// @desc   : delete a profile experience
+// @desc   : Delete a profile experience
 // @access : Private
 router.delete("/experience/:exp_id", jwtVerify, async (req, res) => {
   try {
@@ -260,7 +260,7 @@ router.put(
 )
 
 // @route  : DELETE api/profile/education/:edu_id
-// @desc   : delete a profile education
+// @desc   : Delete a profile education
 // @access : Private
 router.delete("/education/:edu_id", jwtVerify, async (req, res) => {
   try {
@@ -282,7 +282,7 @@ router.delete("/education/:edu_id", jwtVerify, async (req, res) => {
 })
 
 // @route  : GET api/profile/github/:username
-// @desc   : get user repos from GitHub
+// @desc   : Get user repos from GitHub
 // @access : Public
 router.get("/github/:username", (req, res) => {
   try {
