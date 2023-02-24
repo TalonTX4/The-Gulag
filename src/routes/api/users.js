@@ -9,6 +9,11 @@ const jwt = require("jsonwebtoken")
 const User = require("../../../models/User")
 const errorHandler = require("../../misc/errors")
 
+// only use .env if not in production
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config()
+}
+
 // @route  : POST api/users
 // @desc   : Register user
 // @access : public
@@ -57,12 +62,10 @@ router.post(
         },
       }
 
-      //TODO change expire time to 3600 (1 hour) before going into production
-
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 360000 },
+        { expiresIn: process.env.TOKENDURATION },
         (err, token) => {
           if (err) throw err
           res.json({ token })

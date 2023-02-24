@@ -1,20 +1,25 @@
 //imports
 const mongoose = require("mongoose").default
-const config = require("config")
-const URI = config.get("mongoURI")
+
+// only use .env if not in production
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config()
+}
+
+const URI = process.env.MONGOURI
 
 mongoose.set("strictQuery", false)
 
 const connectDB = async () => {
-    try {
-        await mongoose.connect(URI)
+  try {
+    await mongoose.connect(URI)
 
-        console.log("mongoDB connected...")
-    } catch (err) {
-        console.error(err.message)
-        //exit process with failure
-        process.exit(1)
-    }
+    console.log("mongoDB connected...")
+  } catch (err) {
+    console.error(err.message)
+    //exit process with failure
+    process.exit(1)
+  }
 }
 
 module.exports = connectDB
