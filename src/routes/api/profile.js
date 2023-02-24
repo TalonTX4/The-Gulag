@@ -4,7 +4,7 @@ const jwtVerify = require("../../middleware/jwtVerify")
 const config = require("config")
 const router = express.Router()
 const { check, validationResult } = require("express-validator")
-
+const constructors = require("../../misc/constructors")
 const Profile = require("../../../models/Profile")
 const User = require("../../../models/User")
 const request = require("request")
@@ -45,44 +45,26 @@ router.post(
     const errors = validationResult(req)
     if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
 
-    //TODO make all this into an iterative function
-
-    const {
-      company,
-      website,
-      location,
-      bio,
-      status,
-      githubUsername,
-      skills,
-      youtube,
-      facebook,
-      twitter,
-      instagram,
-      linkedin,
-    } = req.body
-
     // build profile object
     const profileFields = {}
-    profileFields.user = req.user.id
 
-    if (company) profileFields.company = company
-    if (website) profileFields.website = website
-    if (location) profileFields.location = location
-    if (bio) profileFields.bio = bio
-    if (status) profileFields.status = status
-    if (githubUsername) profileFields.githubUsername = githubUsername
+    // add skills since they cant be added with the constructor
+    const { skills } = req.body
     if (skills) {
       profileFields.skills = skills.split(",").map((skill) => skill.trim())
     }
 
+    // fill user id reference
+    profileFields.user = req.user.id
+
+    // construct basic top level fields
+    let basicFields = ["company", "website", "bio", "status", "githubUsername"]
+    constructors.profileFields(req, profileFields, basicFields)
+
     // build social object
     profileFields.social = {}
-    if (youtube) profileFields.social.youtube = youtube
-    if (facebook) profileFields.social.facebook = facebook
-    if (twitter) profileFields.social.twitter = twitter
-    if (instagram) profileFields.social.instagram = instagram
-    if (linkedin) profileFields.social.linkedin = linkedin
+    let socialFields = ["youtube", "twitter", "facebook", "linkedin"]
+    constructors.profileFields(req, profileFields.social, socialFields)
 
     //NOTE changed profile to userProfile to clear ambiguity with Profile
 
