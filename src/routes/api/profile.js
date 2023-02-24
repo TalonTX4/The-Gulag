@@ -1,37 +1,27 @@
 //imports
 const express = require("express")
 const jwtVerify = require("../../middleware/jwtVerify")
-const config = require("config")
 const router = express.Router()
 const { check, validationResult } = require("express-validator")
 const constructors = require("../../misc/constructors")
 const Profile = require("../../../models/Profile")
 const User = require("../../../models/User")
-const request = require("request")
 const errorHandler = require("../../misc/errors")
 
-// @route  : GET api/profile/me
-// @desc   : Get current users profile
-// @access : Private
-router.get("/me", jwtVerify, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
-      "user",
-      ["name", "avatar"]
-    )
+// TODO dry checks in experience
+// TODO update experience route
+// TODO merge education and experience into 2 functions for inserting into an array field and deleting from one
 
-    if (!profile) return errorHandler.notFound(res, "Profile")
-
-    res.json(profile)
-  } catch (err) {
-    errorHandler.serverError(res, err)
-  }
-})
+// sub-routes
+router.use("/experience", require("./profile/experience"))
+router.use("/education", require("./profile/education"))
+router.use("/github", require("./profile/github"))
+router.use("/me", require("./profile/me"))
+router.use("/user", require("./profile/user"))
 
 // @route  : POST api/profile
 // @desc   : Create or update user profile
 // @access : Private
-
 router.post(
   "/",
   [
@@ -108,23 +98,6 @@ router.get("/", async (req, res) => {
   }
 })
 
-// @route  : GET api/profile/user/:user_id
-// @desc   : Get profile by user id
-// @access : Public
-router.get("/user/:user_id", async (req, res) => {
-  try {
-    const userProfile = await Profile.findOne({
-      user: req.params.user_id,
-    }).populate("user", ["name", "avatar"])
-
-    if (!userProfile) return errorHandler.notFound(res, "Profile")
-
-    res.json(userProfile)
-  } catch (err) {
-    errorHandler.serverObjectId(res, err, "Profile")
-  }
-})
-
 // @route  : DELETE api/profile
 // @desc   : Delete profile, user, and posts
 // @access : Private
@@ -138,172 +111,6 @@ router.get("/", jwtVerify, async (req, res) => {
     await User.findOneAndRemove({ _id: req.user.id })
 
     res.json({ msg: "user deleted" })
-  } catch (err) {
-    errorHandler.serverError(res, err)
-  }
-})
-
-// TODO dry checks in experience
-// TODO update experience route
-
-// @route  : PUT api/profile/experience
-// @desc   : Add profile experience
-// @access : Private
-router.put(
-  "/experience",
-  [
-    jwtVerify,
-    [
-      check("title", "title is required").not().isEmpty(),
-      check("company", "company is required").not().isEmpty(),
-      check("from", "from date is required").not().isEmpty(),
-    ],
-  ],
-  async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
-
-    const { title, company, location, from, to, current, description } =
-      req.body
-
-    const newExp = {
-      title,
-      company,
-      location,
-      from,
-      to,
-      current,
-      description,
-    }
-
-    try {
-      const profile = await Profile.findOne({ user: req.user.id })
-
-      profile.experience.unshift(newExp)
-
-      await profile.save
-
-      res.json(profile)
-    } catch (err) {
-      errorHandler.serverError(res, err)
-    }
-  }
-)
-
-// @route  : DELETE api/profile/experience/:exp_id
-// @desc   : Delete a profile experience
-// @access : Private
-router.delete("/experience/:exp_id", jwtVerify, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id })
-
-    // Get remove index
-    const removeIndex = profile.experience
-      .map((item) => item.id)
-      .indexOf(req.params.exp_id)
-
-    profile.experience.splice(removeIndex, 1)
-
-    await profile.save()
-
-    res.json(profile)
-  } catch (err) {
-    errorHandler.serverError(res, err)
-  }
-})
-
-//TODO merge education and experience into 2 functions for inserting into an array field and deleting from one
-
-// @route  : PUT api/profile/education
-// @desc   : Add profile education
-// @access : Private
-router.put(
-  "/education",
-  [
-    jwtVerify,
-    [
-      check("school", "school is required").not().isEmpty(),
-      check("degree", "degree is required").not().isEmpty(),
-      check("fieldOfStudy", "field of study is required").not().isEmpty(),
-      check("from", "from date is required").not().isEmpty(),
-    ],
-  ],
-  async (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
-
-    const { school, degree, fieldOfStudy, from, to, current, description } =
-      req.body
-
-    const newEdu = {
-      school,
-      degree,
-      fieldOfStudy,
-      from,
-      to,
-      current,
-      description,
-    }
-
-    try {
-      const profile = await Profile.findOne({ user: req.user.id })
-
-      profile.education.unshift(newEdu)
-
-      await profile.save
-
-      res.json(profile)
-    } catch (err) {
-      errorHandler.serverError(res, err)
-    }
-  }
-)
-
-// @route  : DELETE api/profile/education/:edu_id
-// @desc   : Delete a profile education
-// @access : Private
-router.delete("/education/:edu_id", jwtVerify, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id })
-
-    // Get remove index
-    const removeIndex = profile.education
-      .map((item) => item.id)
-      .indexOf(req.params.edu_id)
-
-    profile.education.splice(removeIndex, 1)
-
-    await profile.save()
-
-    res.json(profile)
-  } catch (err) {
-    errorHandler.serverError(res, err)
-  }
-})
-
-// @route  : GET api/profile/github/:username
-// @desc   : Get user repos from GitHub
-// @access : Public
-router.get("/github/:username", (req, res) => {
-  try {
-    const options = {
-      uri: `https://api.github.com/users/${
-        req.params.username
-      }/repos?per_page=5&sort=created:asc&client_id${config.get(
-        "githubClientId"
-      )}&client_secret=${config.get("githubSecret")}`,
-      method: "GET",
-      headers: { "user-agent": "node.js" },
-    }
-
-    request(options, (error, response, body) => {
-      if (error) console.error(error)
-
-      if (response.statusCode !== 200)
-        return errorHandler.notFound(res, "GitHub Profile")
-
-      res.json(JSON.parse(body))
-    })
   } catch (err) {
     errorHandler.serverError(res, err)
   }
