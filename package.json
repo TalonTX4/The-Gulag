@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "Start": "node src/server",
-    "server": "nodemon src/server"
+    "Server": "nodemon src/server"
   },
   "author": "Joseph Paier",
   "license": "MIT",
