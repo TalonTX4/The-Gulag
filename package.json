@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "Start": "node src/server",
-    "Server": "nodemon src/server"
+    "Server": "nodemon src/server",
+    "Client": "npm start --prefix client",
+    "Dev": "concurrently \"npm run Server\" \"npm run Client\""
   },
   "author": "Joseph Paier",
   "license": "MIT",
