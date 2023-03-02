@@ -21,7 +21,7 @@ const Register = () => {
     if (password !== password2) {
       console.log("passwords do not match")
     } else {
-      console.log(formData)
+      console.log("success")
     }
   }
 
