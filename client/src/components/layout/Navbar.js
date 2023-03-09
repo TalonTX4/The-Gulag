@@ -25,13 +25,22 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/profiles">Convicts</Link>
+        <Link to="/profiles">
+          <i className="fa-solid fa-person-military-rifle"></i>
+          <span className="hide-sm"> Convicts</span>
+        </Link>
       </li>
       <li>
-        <Link to="/register">Register</Link>
+        <Link to="/register">
+          <i className="fa-solid fa-user-plus"></i>
+          <span className="hide-sm"> Register</span>
+        </Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link to="/login">
+          <i className="fa-solid fa-right-to-bracket"></i>
+          <span className="hide-sm"> Login</span>
+        </Link>
       </li>
     </ul>
   )
