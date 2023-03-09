@@ -25,7 +25,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/profiles">Developers</Link>
+        <Link to="/profiles">!!!USER-PLURALITY</Link>
       </li>
       <li>
         <Link to="/register">Register</Link>
@@ -40,7 +40,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <nav className="navbar bg-dark">
       <h1>
         <Link to="/">
-          <i className="fas fa-code"></i> DevConnector
+          <i className="">!!!FA-ICON-IN-CLASS</i> !!!WEBSITE-NAME-SHORT
         </Link>
       </h1>
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
