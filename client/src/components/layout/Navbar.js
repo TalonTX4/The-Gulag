@@ -25,7 +25,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/profiles">!!!USER-PLURALITY</Link>
+        <Link to="/profiles">Convicts</Link>
       </li>
       <li>
         <Link to="/register">Register</Link>
@@ -40,7 +40,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <nav className="navbar bg-dark">
       <h1>
         <Link to="/">
-          <i className="">!!!FA-ICON-IN-CLASS</i> !!!WEBSITE-NAME-SHORT
+          <i className="fa-solid fa-handcuffs"></i> The Gulag
         </Link>
       </h1>
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
