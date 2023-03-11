@@ -10,7 +10,7 @@ const initialState = {
   location: "",
   status: "",
   skills: "",
-  githubusername: "",
+  githubUsername: "",
   bio: "",
   twitter: "",
   facebook: "",
@@ -60,7 +60,7 @@ const ProfileForm = ({
     location,
     status,
     skills,
-    githubusername,
+    githubUsername,
     bio,
     twitter,
     facebook,
@@ -88,7 +88,7 @@ const ProfileForm = ({
       <p className="lead">
         <i className="fas fa-user" />
         {creatingProfile
-          ? ` Let's get some information to make your`
+          ? ` Let's get some information to make your Profile`
           : " Add some changes to your profile"}
       </p>
       <small>* = required field</small>
@@ -154,15 +154,16 @@ const ProfileForm = ({
             onChange={onChange}
           />
           <small className="form-text">
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
+            Please use comma separated values (eg.
+            Gaming,Music,Hockey,T.T.R.P.G)
           </small>
         </div>
         <div className="form-group">
           <input
             type="text"
             placeholder="Github Username"
-            name="githubusername"
-            value={githubusername}
+            name="githubUsername"
+            value={githubUsername}
             onChange={onChange}
           />
           <small className="form-text">
