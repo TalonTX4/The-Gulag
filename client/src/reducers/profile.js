@@ -1,37 +1,71 @@
-import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE } from "../actions/types"
+import React, { useState } from "react"
+import { Link, Navigate } from "react-router-dom"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
+import { login } from "../actions/auth"
 
-const initialState = {
-  profile: null,
-  profiles: [],
-  repos: [],
-  loading: true,
-  error: {},
-}
+const Login = ({ login, isAuthenticated }) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
 
-export default function (state = initialState, action) {
-  const { type, payload } = action
+  const { email, password } = formData
 
-  switch (type) {
-    case GET_PROFILE:
-      return {
-        ...state,
-        profile: payload,
-        loading: false,
-      }
-    case PROFILE_ERROR:
-      return {
-        ...state,
-        error: payload,
-        loading: false,
-      }
-    case CLEAR_PROFILE:
-      return {
-        ...state,
-        profile: null,
-        repos: [],
-        loading: false,
-      }
-    default:
-      return state
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    login(email, password)
   }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />
+  }
+
+  return (
+    <section className="container">
+      <h1 className="large text-primary">Sign In</h1>
+      <p className="lead">
+        <i className="fas fa-user" /> Sign Into Your Account
+      </p>
+      <form className="form" onSubmit={onSubmit}>
+        <div className="form-group">
+          <input
+            type="email"
+            placeholder="Email Address"
+            name="email"
+            value={email}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={onChange}
+            minLength="6"
+          />
+        </div>
+        <input type="submit" className="btn btn-primary" value="Login" />
+      </form>
+      <p className="my-1">
+        Don't have an account? <Link to="/register">Sign Up</Link>
+      </p>
+    </section>
+  )
 }
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+}
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+})
+
+export default connect(mapStateToProps, { login })(Login)

@@ -1,9 +1,14 @@
-import React, { Fragment, useEffect, useState } from "react"
+import React, { Fragment, useState, useEffect } from "react"
+import { Link, useMatch, useNavigate } from "react-router-dom"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { Link, useMatch, useNavigate } from "react-router-dom"
 import { createProfile, getCurrentProfile } from "../../actions/profile"
 
+/*
+  NOTE: declare initialState outside of component
+  so that it doesn't trigger a useEffect
+  we can then safely use this to construct our profileData
+ */
 const initialState = {
   company: "",
   website: "",
@@ -36,7 +41,7 @@ const ProfileForm = ({
     // if there is no profile, attempt to fetch one
     if (!profile) getCurrentProfile()
 
-    // if we finished loading, and we do have a profile
+    // if we finished loading and we do have a profile
     // then build our profileData
     if (!loading && profile) {
       const profileData = { ...initialState }
