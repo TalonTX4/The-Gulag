@@ -5,7 +5,6 @@
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
-  height: 100vh;
 }
 
 * {
@@ -18,10 +17,8 @@ body {
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  position: relative;
-  background: url('./img/showcase.jpeg') no-repeat fixed center;
-  background-size: cover;
-  color: whitesmoke;
+  background-color: #fff;
+  color: #333;
 }
 
 a {
@@ -50,8 +47,6 @@ img {
   font-size: 4rem;
   line-height: 1.2;
   margin-bottom: 1rem;
-  background-color: rgba(0,0,0,0.25);
-  box-shadow: 0 0 20px 8px rgba(0,0,0,0.3);
 }
 
 .large {
@@ -71,7 +66,6 @@ img {
 
 .text-primary {
   color: var(--primary-color);
-
 }
 
 .text-dark {
@@ -245,14 +239,12 @@ img {
 /* Forms */
 .form .form-group {
   margin: 1.2rem 0;
-  background-color: rgba(0,0,0,0.25);
-  box-shadow: 0 0 20px 8px rgba(0,0,0,0.3);
 }
 
 .form .form-text {
   display: block;
   margin-top: 0.3rem;
-  color: #d3c8c8;
+  color: #888;
 }
 
 .form input[type='text'],
@@ -343,6 +335,7 @@ button {
 /* Landing Page */
 .landing {
   position: relative;
+  background: url('./img/showcase.jpeg') no-repeat center center/cover;
   height: 100vh;
 }
 
@@ -588,6 +581,6 @@ button {
 .alert-wrapper {
   position: fixed;
   top: 4rem;
-  left: 2rem;
+  right: 2rem;
   display: inline-block;
 }
