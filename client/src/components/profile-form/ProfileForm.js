@@ -88,13 +88,15 @@ const ProfileForm = ({
   return (
     <section className="container">
       <h1 className="large text-primary">
-        {creatingProfile ? "Create Your Profile" : "Edit Your Profile"}
+        {creatingProfile
+          ? "Create Your Personnel File"
+          : "Edit Your Personnel File"}
       </h1>
       <p className="lead">
         <i className="fas fa-user" />
         {creatingProfile
-          ? ` Let's get some information to make your Profile`
-          : " Add some changes to your profile"}
+          ? ` Let's get some information to make your Personnel File`
+          : " Add some changes to your Personnel File"}
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmit}>

@@ -19,7 +19,9 @@ const Dashboard = ({
 
   return (
     <section className="container">
-      <h1 className="large text-primary">Personnel File</h1>
+      <h1 className="large text-primary">
+        <i className="fa-solid fa-book" /> Personnel File
+      </h1>
       <p className="lead">
         <i className="fas fa-user" /> Welcome To The Gulag {user && user.name}
       </p>
@@ -31,7 +33,7 @@ const Dashboard = ({
 
           <div className="my-2">
             <button className="btn btn-danger" onClick={() => deleteAccount()}>
-              <i className="fas fa-user-minus" /> Delete My Account
+              <i className="fas fa-user-minus" /> Delete My Personnel File
             </button>
           </div>
         </>
@@ -39,7 +41,7 @@ const Dashboard = ({
         <>
           <p>You have yet setup a profile, please add some info below</p>
           <Link to="/create-profile" className="btn btn-primary my-1">
-            Create Profile
+            Create Personnel File
           </Link>
         </>
       )}
