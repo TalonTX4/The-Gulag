@@ -3,3 +3,4 @@ node_modules/
 .IDE stuff/
 /.prettierrc.json
 /.env
+/client/src/.env

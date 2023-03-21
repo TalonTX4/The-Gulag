@@ -14,6 +14,8 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
 }
 
+const passMinLength = config.get("passwordRestrictions.length")
+
 // @route  : POST api/users
 // @desc   : Register user
 // @access : public
@@ -24,8 +26,8 @@ router.post(
     check("email", "Please include a valid email").isEmail(),
     check(
       "password",
-      "Please enter a password with 2 or more characters"
-    ).isLength({ min: 2 }),
+      `Please enter a password with ${passMinLength} or more characters`
+    ).isLength({ min: passMinLength }),
   ],
   async (req, res) => {
     const errors = validationResult(req)
