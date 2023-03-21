@@ -41,7 +41,7 @@ const ProfileForm = ({
     // if there is no profile, attempt to fetch one
     if (!profile) getCurrentProfile()
 
-    // if we finished loading and we do have a profile
+    // if we finished loading, and we do have a profile
     // then build our profileData
     if (!loading && profile) {
       const profileData = { ...initialState }

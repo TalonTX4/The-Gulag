@@ -1,71 +1,65 @@
-import React, { useState } from "react"
-import { Link, Navigate } from "react-router-dom"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
-import { login } from "../actions/auth"
+import {
+  GET_PROFILE,
+  PROFILE_ERROR,
+  CLEAR_PROFILE,
+  UPDATE_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
+  NO_REPOS,
+} from "../actions/types"
 
-const Login = ({ login, isAuthenticated }) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  })
-
-  const { email, password } = formData
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    login(email, password)
-  }
-
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />
-  }
-
-  return (
-    <section className="container">
-      <h1 className="large text-primary">Sign In</h1>
-      <p className="lead">
-        <i className="fas fa-user" /> Sign Into Your Account
-      </p>
-      <form className="form" onSubmit={onSubmit}>
-        <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={email}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={onChange}
-            minLength="6"
-          />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Login" />
-      </form>
-      <p className="my-1">
-        Don't have an account? <Link to="/register">Sign Up</Link>
-      </p>
-    </section>
-  )
+const initialState = {
+  profile: null,
+  profiles: [],
+  repos: [],
+  loading: true,
+  error: {},
 }
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
+function profileReducer(state = initialState, action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case GET_PROFILE:
+    case UPDATE_PROFILE:
+      return {
+        ...state,
+        profile: payload,
+        loading: false,
+      }
+    case GET_PROFILES:
+      return {
+        ...state,
+        profiles: payload,
+        loading: false,
+      }
+    case PROFILE_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false,
+        profile: null,
+      }
+    case CLEAR_PROFILE:
+      return {
+        ...state,
+        profile: null,
+        repos: [],
+      }
+    case GET_REPOS:
+      return {
+        ...state,
+        repos: payload,
+        loading: false,
+      }
+    case NO_REPOS:
+      return {
+        ...state,
+        repos: [],
+      }
+    default:
+      return state
+  }
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-})
-
-export default connect(mapStateToProps, { login })(Login)
+export default profileReducer
