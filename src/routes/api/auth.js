@@ -7,23 +7,28 @@ const jwt = require("jsonwebtoken")
 const config = require("config")
 const { check, validationResult } = require("express-validator")
 const jwtVerify = require("../../middleware/jwtVerify")
+const errorHandler = require("../../misc/errors")
+
+// only use .env if not in production
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config()
+}
 
 // @route  : GET api/auth
-// @desc   : Test route
-// @access : public
+// @desc   : Get user by token
+// @access : Private
 router.get("/", jwtVerify, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password")
     res.json(user)
   } catch (err) {
-    console.error(err.message)
-    res.status(500).send(config.get("serverError"))
+    errorHandler.serverError(res, err)
   }
 })
 
 // @route  : POST api/auth
 // @desc   : Authenticate user & get token
-// @access : public
+// @access : Public
 router.post(
   "/",
   [
@@ -32,28 +37,18 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
+    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
 
     const { email, password } = req.body
 
     try {
       let user = await User.findOne({ email })
 
-      if (!user) {
-        return res.status(400).json({
-          error: [{ msg: config.get("authError") }],
-        })
-      }
+      if (!user) return errorHandler.authError(res)
 
       const isMatch = await bcrypt.compare(password, user.password)
 
-      if (!isMatch) {
-        return res.status(400).json({
-          error: [{ msg: config.get("authError") }],
-        })
-      }
+      if (!isMatch) return errorHandler.authError(res)
 
       const payload = {
         user: {
@@ -61,20 +56,17 @@ router.post(
         },
       }
 
-      //TODO change expire time to 3600 (1 hour) before going into production
-
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 360000 },
+        { expiresIn: process.env.TOKENDURATION },
         (err, token) => {
           if (err) throw err
           res.json({ token })
         }
       )
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )

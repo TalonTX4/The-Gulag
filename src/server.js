@@ -4,8 +4,13 @@ const connectDB = require("./database")
 
 const app = express()
 
+// only use .env if not in production
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config()
+}
+
 // Connect Database
-connectDB()
+connectDB().then()
 
 // init middleware
 app.use(express.json({ extended: false }))
@@ -20,7 +25,7 @@ app.use("/api/profile", require("./routes/api/profile"))
 app.use("/api/posts", require("./routes/api/posts"))
 
 // use environment port or 5000
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT
 
 //NOTE ${varName} adds in the varName variable to the string (only works with `` (tilde) not "" (quotes))
 app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))

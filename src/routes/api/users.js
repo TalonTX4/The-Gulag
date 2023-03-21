@@ -6,11 +6,16 @@ const { check, validationResult } = require("express-validator")
 const bcrypt = require("bcryptjs")
 const config = require("config")
 const jwt = require("jsonwebtoken")
-
 const User = require("../../../models/User")
+const errorHandler = require("../../misc/errors")
+
+// only use .env if not in production
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config()
+}
 
 // @route  : POST api/users
-// @desc   : register user
+// @desc   : Register user
 // @access : public
 router.post(
   "/",
@@ -24,20 +29,14 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
+    if (!errors.isEmpty()) return errorHandler.validatorReturn(res, errors)
 
     const { name, email, password } = req.body
 
     try {
       let user = await User.findOne({ email })
 
-      if (user) {
-        return res.status(400).json({
-          error: [{ msg: "User already exists" }],
-        })
-      }
+      if (user) return errorHandler.authError(res)
 
       const avatar = gravatar.url(email, {
         s: "200",
@@ -63,20 +62,17 @@ router.post(
         },
       }
 
-      //TODO change expire time to 3600 (1 hour) before going into production
-
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 360000 },
+        { expiresIn: process.env.TOKENDURATION },
         (err, token) => {
           if (err) throw err
           res.json({ token })
         }
       )
     } catch (err) {
-      console.error(err.message)
-      res.status(500).send(config.get("serverError"))
+      errorHandler.serverError(res, err)
     }
   }
 )
