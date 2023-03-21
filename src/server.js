@@ -25,7 +25,7 @@ app.use("/api/profile", require("./routes/api/profile"))
 app.use("/api/posts", require("./routes/api/posts"))
 
 // use environment port or 5000
-const PORT = process.env.PORT
+const PORT = process.env.SERVER_PORT
 
 //NOTE ${varName} adds in the varName variable to the string (only works with `` (tilde) not "" (quotes))
 app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
