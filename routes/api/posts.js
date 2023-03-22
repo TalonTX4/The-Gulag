@@ -3,8 +3,8 @@ const express = require("express")
 const { check, validationResult } = require("express-validator")
 const jwtVerify = require("../../middleware/jwtVerify")
 const router = express.Router()
-const User = require("../../../models/User")
-const Post = require("../../../models/Post")
+const User = require("../../models/User")
+const Post = require("../../models/Post")
 const errorHandler = require("../../misc/errors")
 
 // sub-routes

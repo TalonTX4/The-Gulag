@@ -4,8 +4,8 @@ const router = express.Router()
 const jwtVerify = require("../../../middleware/jwtVerify")
 const { check, validationResult } = require("express-validator")
 const errorHandler = require("../../../misc/errors")
-const User = require("../../../../models/User")
-const Post = require("../../../../models/Post")
+const User = require("../../../models/User")
+const Post = require("../../../models/Post")
 
 // @route  : POST api/posts/comment/:id
 // @desc   : Comment on a post

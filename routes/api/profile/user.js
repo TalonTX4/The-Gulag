@@ -1,6 +1,6 @@
 // imports
 const express = require("express")
-const Profile = require("../../../../models/Profile")
+const Profile = require("../../../models/Profile")
 const errorHandler = require("../../../misc/errors")
 const router = express.Router()
 

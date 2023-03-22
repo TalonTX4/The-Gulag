@@ -3,7 +3,7 @@ const express = require("express")
 const jwtVerify = require("../../../middleware/jwtVerify")
 const { check, validationResult } = require("express-validator")
 const errorHandler = require("../../../misc/errors")
-const Profile = require("../../../../models/Profile")
+const Profile = require("../../../models/Profile")
 const router = express.Router()
 
 // @route  : PUT api/profile/education

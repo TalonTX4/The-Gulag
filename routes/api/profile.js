@@ -4,8 +4,8 @@ const jwtVerify = require("../../middleware/jwtVerify")
 const router = express.Router()
 const { check, validationResult } = require("express-validator")
 const constructors = require("../../misc/constructors")
-const Profile = require("../../../models/Profile")
-const User = require("../../../models/User")
+const Profile = require("../../models/Profile")
+const User = require("../../models/User")
 const errorHandler = require("../../misc/errors")
 
 // TODO dry checks in experience

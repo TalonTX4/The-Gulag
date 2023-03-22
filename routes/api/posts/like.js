@@ -1,7 +1,7 @@
 // imports
 const express = require("express")
 const jwtVerify = require("../../../middleware/jwtVerify")
-const Post = require("../../../../models/Post")
+const Post = require("../../../models/Post")
 const errorHandler = require("../../../misc/errors")
 const router = express.Router()
 
