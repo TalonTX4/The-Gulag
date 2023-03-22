@@ -104,7 +104,7 @@ export const createProfile =
         setAlert(edit ? "Profile Updated" : "Profile Created", "success")
       )
     } catch (err) {
-      const errors = err.response.data.errors
+      const errors = err.response.data.error
 
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, "danger")))
@@ -130,7 +130,7 @@ export const addExperience = (formData) => async (dispatch) => {
     dispatch(setAlert("Experience Added", "success"))
     return res.data
   } catch (err) {
-    const errors = err.response.data.errors
+    const errors = err.response.data.error
 
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")))
@@ -156,7 +156,7 @@ export const addEducation = (formData) => async (dispatch) => {
     dispatch(setAlert("Education Added", "success"))
     return res.data
   } catch (err) {
-    const errors = err.response.data.errors
+    const errors = err.response.data.error
 
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")))
