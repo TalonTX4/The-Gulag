@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
 }
 
-const passMinLength = config.get("passwordRestrictions.length")
+const passMinLength = config.get("client.passwordRestrictions.charMin")
 
 // @route  : POST api/users
 // @desc   : Register user

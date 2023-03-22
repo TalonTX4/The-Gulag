@@ -1,4 +1,10 @@
 {
+  "client": {
+    "passwordRestrictions": {
+      "charMin": 6
+    }
+  },
+
   "backendConnector": {
     "serverPort": 5000
   },
@@ -15,10 +21,6 @@
       "postUnlike": "post has not yet been liked",
       "postLike": "post already liked"
     }
-  },
-
-  "passwordRestrictions": {
-    "length": 6
   },
 
   "jwtTokenDuration": 3600
