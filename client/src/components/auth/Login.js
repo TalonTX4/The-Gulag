@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { login } from "../../actions/auth"
+import config from "config"
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -51,7 +52,8 @@ const Login = ({ login, isAuthenticated }) => {
             required
           />
           <small className="form-text">
-            Password must be at least {6} Characters long
+            Password must be at least {config.passwordRestrictions.charMin}{" "}
+            Characters long
           </small>
         </div>
         <input type="submit" className="btn btn-primary" value="Login" />

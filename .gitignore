@@ -4,3 +4,4 @@ node_modules/
 /.prettierrc.json
 /.env
 
+/client/src/client.json
