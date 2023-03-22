@@ -1,0 +1,7 @@
+{
+  "passwordRestrictions": {
+    "length": 1
+  },
+
+  "jwtTokenDuration": 600000
+}

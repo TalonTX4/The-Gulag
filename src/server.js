@@ -1,13 +1,8 @@
 // imports
 const express = require("express")
 const connectDB = require("./database")
-
 const app = express()
-
-// only use .env if not in production
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config()
-}
+const config = require("config")
 
 // Connect Database
 connectDB().then()
@@ -24,8 +19,8 @@ app.use("/api/auth", require("./routes/api/auth"))
 app.use("/api/profile", require("./routes/api/profile"))
 app.use("/api/posts", require("./routes/api/posts"))
 
-// use environment port or 5000
-const PORT = process.env.SERVER_PORT
+// use port set in config
+const PORT = config.get("backendConnector.serverPort")
 
 //NOTE ${varName} adds in the varName variable to the string (only works with `` (tilde) not "" (quotes))
 app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
