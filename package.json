@@ -6,7 +6,7 @@
   "scripts": {
     "Start": "node src/server",
     "Server": "cross-env NODE_ENV=development nodemon src/server",
-    "Client": "npm start --prefix client",
+    "Client": "npm Start --prefix client",
     "Dev": "concurrently \"npm run Server\" \"npm run Client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm i --prefix client && npm run build --prefix client"
   },
