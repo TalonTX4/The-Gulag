@@ -4,7 +4,6 @@ import { Link, Navigate } from "react-router-dom"
 import { setAlert } from "../../actions/alert"
 import { register } from "../../actions/auth"
 import PropTypes from "prop-types"
-import config from "../../client-config/default.json"
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -70,8 +69,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             onChange={onChange}
           />
           <small className="form-text">
-            Password must be at least {config.passwordRestrictions.length}{" "}
-            Characters long
+            Password must be at least {6} Characters long
           </small>
         </div>
         <div className="form-group">

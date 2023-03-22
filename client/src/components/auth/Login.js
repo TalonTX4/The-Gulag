@@ -4,8 +4,6 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { login } from "../../actions/auth"
 
-import config from "../../client-config/default.json"
-
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -53,8 +51,7 @@ const Login = ({ login, isAuthenticated }) => {
             required
           />
           <small className="form-text">
-            Password must be at least {config.passwordRestrictions.length}{" "}
-            Characters long
+            Password must be at least {6} Characters long
           </small>
         </div>
         <input type="submit" className="btn btn-primary" value="Login" />
