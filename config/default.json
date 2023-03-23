@@ -1,5 +1,29 @@
 {
   "client": {
+    "navItems": {
+      "guest": [
+        { "text": "Convicts",
+          "icon": "fas fa-person-military-rifle",
+          "linksTo": "/profiles" },
+        { "text": "Register",
+          "icon": "fas fa-user-plus",
+          "linksTo": "/register" },
+        { "text": "Login",
+          "icon": "fas fa-right-to-bracket",
+          "linksTo": "/login" }
+      ],
+      "auth": [
+        { "text": "Convicts",
+          "icon": "fas fa-person-military-rifle",
+          "linksTo": "/profiles" },
+        { "text": "Posts",
+          "icon": "fas fa-list-ul",
+          "linksTo": "/posts" },
+        { "text": "Personnel File",
+          "icon": "fas fa-book",
+          "linksTo": "/dashboard" }
+      ]
+    },
     "passwordRestrictions": {
       "charMin": 6
     }
