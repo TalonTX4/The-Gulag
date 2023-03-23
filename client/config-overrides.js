@@ -1,10 +1,10 @@
 /* config-overrides.js */
 process.env.NODE_CONFIG_DIR = "../config"
-const { client } = require("config")
+const config = require("config")
 const fs = require("fs")
 const path = require("path")
 
-const configData = JSON.stringify(client)
+const configData = JSON.stringify(config)
 
 fs.writeFileSync(path.resolve(__dirname, "src/client.json"), configData)
 
