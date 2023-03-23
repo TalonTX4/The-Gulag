@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import { createProfile, getCurrentProfile } from "../../actions/profile"
 import { formConstructor } from "../../constructors/formConstructor"
 
+// declaring initialState outside of profileForm to preemptively set all values to null
 const initialState = {
   company: "",
   website: "",
