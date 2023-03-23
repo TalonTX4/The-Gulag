@@ -25,6 +25,7 @@
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.1",
+    "path-browserify": "^1.0.1",
     "request": "^2.88.2"
   },
   "devDependencies": {
