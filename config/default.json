@@ -10,8 +10,7 @@
           "linksTo": "/register" },
         { "text": "Login",
           "icon": "fas fa-right-to-bracket",
-          "linksTo": "/login" }
-      ],
+          "linksTo": "/login" } ],
       "auth": [
         { "text": "Convicts",
           "icon": "fas fa-person-military-rifle",
@@ -21,9 +20,81 @@
           "linksTo": "/posts" },
         { "text": "Personnel File",
           "icon": "fas fa-book",
-          "linksTo": "/dashboard" }
-      ]
+          "linksTo": "/dashboard" } ]
     },
+    "form": {
+      "profile":[
+        { "placeholder": "* Select Professional Status",
+          "type": "dropdown",
+          "valueName": "status",
+          "optionsArray": [
+            "Developer",
+            "Junior Developer",
+            "Senior Developer",
+            "Manager"
+          ],
+          "desc": "Give us an idea of where you are at in your career" },
+        { "type": "textBox",
+          "placeholder": "Company",
+          "valueName": "company",
+          "desc": "Could be your own company or one you work for" },
+        { "type": "textBox",
+          "placeholder": "Website",
+          "valueName": "website",
+          "desc": "Could be your own or a company website" },
+        { "type": "textBox",
+          "placeholder": "Location",
+          "valueName": "location",
+          "desc": "City & state suggested (eg. Boston, MA)" },
+        { "type": "textBox",
+          "placeholder": "* Skills",
+          "valueName": "skills",
+          "desc": "Please use comma separated values (eg. Gaming,Music,Hockey,T.T.R.P.G)" },
+        { "type": "textBox",
+          "placeholder": "Github Username",
+          "valueName": "githubUsername",
+          "desc": "If you want your latest repos and a Github link, include your username" },
+        { "type": "textField",
+          "placeholder": "A short bio of yourself",
+          "valueName": "bio",
+          "desc": "Tell us a little about yourself" }
+      ],
+      "social": [
+        { "type": "icon",
+          "icon": "fab fa-youtube fa-2x",
+          "valueName": "youtube",
+          "placeholder": "Youtube URL"
+        },
+        { "type": "icon",
+          "icon": "fab fa-twitter fa-2x",
+          "valueName": "twitter",
+          "placeholder": "Twitter URL"
+        },
+        { "type": "icon",
+          "icon": "fab fa-facebook fa-2x",
+          "valueName": "facebook",
+          "placeholder": "Facebook URL"
+        },
+        { "type": "icon",
+          "icon": "fab fa-linkedin fa-2x",
+          "valueName": "linkedin",
+          "placeholder": "Linkedin URL"
+        },
+        { "type": "icon",
+          "icon": "fab fa-instagram fa-2x",
+          "valueName": "instagram",
+          "placeholder": "Instagram URL"
+        }
+      ],
+
+      "login": {
+
+      },
+      "register": {
+
+      }
+    },
+
     "passwordRestrictions": {
       "charMin": 6
     }

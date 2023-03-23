@@ -2,7 +2,7 @@ import config from "config"
 import { Link } from "react-router-dom"
 import React from "react"
 
-function navbarConstructor(category) {
+export function navbarConstructor(category) {
   return config.navItems[category].map((item, index) => {
     return (
       <li key={index}>
@@ -14,5 +14,3 @@ function navbarConstructor(category) {
     )
   })
 }
-
-export default navbarConstructor()

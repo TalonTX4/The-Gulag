@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { logout } from "../../actions/auth"
-import navbarConstructor from "../../constructors/navbarConstructor"
+import { navbarConstructor } from "../../constructors/navbarConstructor"
 
 let guestList = navbarConstructor("guest")
 let authList = navbarConstructor("auth")
