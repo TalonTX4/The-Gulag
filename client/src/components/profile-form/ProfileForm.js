@@ -5,11 +5,6 @@ import { connect } from "react-redux"
 import { createProfile, getCurrentProfile } from "../../actions/profile"
 import { formConstructor } from "../../constructors/formConstructor"
 
-/*
-  NOTE: declare initialState outside of component
-  so that it doesn't trigger a useEffect
-  we can then safely use this to construct our profileData
- */
 const initialState = {
   company: "",
   website: "",

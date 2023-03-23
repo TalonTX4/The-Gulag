@@ -56,8 +56,6 @@ router.post(
     let socialFields = ["youtube", "twitter", "facebook", "linkedin"]
     constructors.profileFields(req, profileFields.social, socialFields)
 
-    //NOTE changed profile to userProfile to clear ambiguity with Profile
-
     try {
       let userProfile = await Profile.findOne({ user: req.user.id })
 
