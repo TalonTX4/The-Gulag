@@ -55,20 +55,7 @@ const ProfileForm = ({
     }
   }, [loading, getCurrentProfile, profile])
 
-  const {
-    company,
-    website,
-    location,
-    status,
-    skills,
-    githubUsername,
-    bio,
-    twitter,
-    facebook,
-    linkedin,
-    youtube,
-    instagram,
-  } = formData
+  const {} = formData
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value })
