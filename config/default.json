@@ -27,10 +27,10 @@
         "type": "dropdown",
         "valueName": "status",
         "optionsArray": [
-          "male",
-          "female",
-          "non-binary",
-          "other"
+          "Male",
+          "Female",
+          "Non-binary",
+          "Other"
         ],
         "desc": "Give us an idea of where you are at in your career" },
       { "type": "textBox",
