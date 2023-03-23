@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Social Network to improve code competence",
   "main": "server.js",
+  "engines": {
+    "node": "19.1.0"
+  },
   "scripts": {
     "start": "node server",
     "server": "cross-env NODE_ENV=development nodemon server",
