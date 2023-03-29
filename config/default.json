@@ -112,5 +112,7 @@
     }
   },
 
+  "databaseConnectSuccess": "mongoDB connected...",
+
   "jwtTokenDuration": 3600
 }

@@ -1,4 +1,5 @@
 //imports
+const config = require("config")
 const mongoose = require("mongoose").default
 
 // only use .env if not in production
@@ -14,7 +15,7 @@ const connectDB = async () => {
   try {
     await mongoose.connect(URI)
 
-    console.log("mongoDB connected...")
+    console.log(config.get("databaseConnectSuccess"))
   } catch (err) {
     console.error(err.message)
     //exit process with failure
