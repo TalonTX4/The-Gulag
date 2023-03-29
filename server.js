@@ -1,21 +1,8 @@
 // imports
 const express = require("express")
-const connectDB = require("./database")
-const app = express()
 const config = require("config")
 const path = require("path")
-
-// Connect Database
-connectDB().then()
-
-// init middleware
-app.use(express.json({ extended: false }))
-
-// define routes
-app.use("/api/users", require("./routes/api/users"))
-app.use("/api/auth", require("./routes/api/auth"))
-app.use("/api/profile", require("./routes/api/profile"))
-app.use("/api/posts", require("./routes/api/posts"))
+const app = require("./app")
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
