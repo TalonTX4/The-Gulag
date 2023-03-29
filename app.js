@@ -1,10 +1,6 @@
 // imports
 const express = require("express")
-const connectDB = require("./database")
 const app = express()
-
-// Connect Database
-connectDB().then()
 
 // init middleware
 app.use(express.json({ extended: false }))

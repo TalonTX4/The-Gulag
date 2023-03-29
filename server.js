@@ -3,6 +3,10 @@ const express = require("express")
 const config = require("config")
 const path = require("path")
 const app = require("./app")
+const connectDB = require("./database")
+
+// Connect Database
+connectDB().then()
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
