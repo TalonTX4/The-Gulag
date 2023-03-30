@@ -61,9 +61,6 @@ describe("POST api/auth", () => {
         password: "password123",
       })
       .expect(200)
-      .expect((res) => {
-        res.body.token != null
-      })
       .end((err) => {
         if (err) return done(err)
         return done()
@@ -76,9 +73,6 @@ describe("POST api/auth", () => {
         email: "bill@removeme.com",
       })
       .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
       .end((err) => {
         if (err) return done(err)
         return done()
@@ -92,9 +86,6 @@ describe("POST api/auth", () => {
         password: "password123",
       })
       .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
       .end((err) => {
         if (err) return done(err)
         return done()
@@ -108,9 +99,6 @@ describe("POST api/auth", () => {
         password: "password123",
       })
       .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
       .end((err) => {
         if (err) return done(err)
         return done()
@@ -124,9 +112,6 @@ describe("POST api/auth", () => {
         password: "wrongPassword",
       })
       .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
       .end((err) => {
         if (err) return done(err)
         return done()

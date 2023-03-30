@@ -3,7 +3,6 @@ const app = require("../../../app")
 const dbConnector = require("../../db-connector")
 
 let mockId
-let mockPostId
 
 jest.mock("../../../middleware/jwtVerify", () => async (req, res, next) => {
   req.user = { id: await mockId }
@@ -13,7 +12,7 @@ jest.mock("../../../middleware/jwtVerify", () => async (req, res, next) => {
 let server
 
 beforeAll(async () => {
-  server = app.listen(5001, (err) => {
+  server = app.listen(5003, (err) => {
     if (err) return err
   })
   await dbConnector.connect()
@@ -27,7 +26,6 @@ afterAll(async () => {
 beforeEach(async () => {
   await dbConnector.fillDatabase()
   mockId = await dbConnector.testUser()
-  mockPostId = await dbConnector.testPost()
 })
 
 afterEach(async () => {
@@ -37,26 +35,56 @@ afterEach(async () => {
 
 test("Server start", () => {})
 
-describe("POST api/posts", () => {
+describe("POST api/profile", () => {
   test("normal case", (done) => {
-    let inputText = "post body"
+    let userObj = {
+      status: "manager",
+      skills: "css, ruby, javascript",
+      company: "google",
+      website: "catPics.com",
+      bio: "generic bio",
+      githubUsername: "bill97",
+      facebook: "facebook.com/bill",
+    }
     request(server)
-      .post("/api/posts")
-      .send({
-        text: inputText,
-      })
+      .post("/api/profile")
+      .send(userObj)
       .expect(200)
       .end((err) => {
         if (err) return done(err)
         return done()
       })
   })
-  test("no text case", (done) => {
+  test("missing status case", (done) => {
+    let userObj = {
+      skills: "css, ruby, javascript",
+      company: "google",
+      website: "catPics.com",
+      bio: "generic bio",
+      githubUsername: "bill97",
+      facebook: "facebook.com/bill",
+    }
     request(server)
-      .post("/api/posts")
-      .send({
-        text: "",
+      .post("/api/profile")
+      .send(userObj)
+      .expect(400)
+      .end((err) => {
+        if (err) return done(err)
+        return done()
       })
+  })
+  test("missing skills case", (done) => {
+    let userObj = {
+      status: "manager",
+      company: "google",
+      website: "catPics.com",
+      bio: "generic bio",
+      githubUsername: "bill97",
+      facebook: "facebook.com/bill",
+    }
+    request(server)
+      .post("/api/profile")
+      .send(userObj)
       .expect(400)
       .end((err) => {
         if (err) return done(err)
@@ -64,10 +92,10 @@ describe("POST api/posts", () => {
       })
   })
 })
-describe("GET api/posts", () => {
+describe("GET api/profile", () => {
   test("normal case", (done) => {
     request(server)
-      .get("/api/posts")
+      .get("/api/profile")
       .send({})
       .expect(200)
       .end((err) => {
@@ -76,44 +104,12 @@ describe("GET api/posts", () => {
       })
   })
 })
-describe("GET api/posts/:id", () => {
+describe("DELETE api/profile", () => {
   test("normal case", (done) => {
     request(server)
-      .get(`/api/posts/${mockPostId}`)
+      .del("/api/profile")
       .send({})
       .expect(200)
-      .end((err) => {
-        if (err) return done(err)
-        return done()
-      })
-  })
-  test("bad id case", (done) => {
-    request(server)
-      .get(`/api/posts/invalidPostId`)
-      .send({})
-      .expect(404)
-      .end((err) => {
-        if (err) return done(err)
-        return done()
-      })
-  })
-})
-describe("DELETE api/posts/:id", () => {
-  test("normal case", (done) => {
-    request(server)
-      .del(`/api/posts/${mockPostId}`)
-      .send({})
-      .expect(200)
-      .end((err) => {
-        if (err) return done(err)
-        return done()
-      })
-  })
-  test("bad id case", (done) => {
-    request(server)
-      .del(`/api/posts/invalidPostId`)
-      .send({})
-      .expect(404)
       .end((err) => {
         if (err) return done(err)
         return done()
