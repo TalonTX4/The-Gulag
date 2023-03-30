@@ -99,7 +99,7 @@ router.get("/", async (req, res) => {
 // @route  : DELETE api/profile
 // @desc   : Delete profile, user, and posts
 // @access : Private
-router.get("/", jwtVerify, async (req, res) => {
+router.delete("/", jwtVerify, async (req, res) => {
   try {
     // TODO - remove user posts
 
