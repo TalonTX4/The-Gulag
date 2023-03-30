@@ -3,6 +3,7 @@ const { MongoMemoryServer } = require("mongodb-memory-server")
 const User = require("../models/User")
 const gravatar = require("gravatar")
 const bcrypt = require("bcryptjs")
+const Post = require("../models/Post")
 
 let mongo
 let user
@@ -64,10 +65,24 @@ const fillDatabase = async () => {
   user.password = await bcrypt.hash(password, salt)
 
   await user.save()
+
+  const newPost = new Post({
+    text: "dummy text post target",
+    name: user.name,
+    avatar: user.avatar,
+    user: user.id,
+  })
+
+  await newPost.save()
+}
+
+const testPost = async () => {
+  let testPost = await Post.findOne({ name })
+  return testPost.id
 }
 
 const testUser = async () => {
-  let testUser = await User.findOne({ email })
+  let testUser = await User.findOne({ name })
   return testUser.id
 }
 
@@ -77,4 +92,5 @@ module.exports = {
   closeDatabase,
   clearDatabase,
   testUser,
+  testPost,
 }

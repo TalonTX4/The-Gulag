@@ -3,6 +3,7 @@ const app = require("../../../app")
 const dbConnector = require("../../db-connector")
 
 let mockId
+let mockPostId
 
 jest.mock("../../../middleware/jwtVerify", () => async (req, res, next) => {
   req.user = { id: await mockId }
@@ -12,7 +13,7 @@ jest.mock("../../../middleware/jwtVerify", () => async (req, res, next) => {
 let server
 
 beforeAll(async () => {
-  server = app.listen(5002, (err) => {
+  server = app.listen(5001, (err) => {
     if (err) return err
   })
   await dbConnector.connect()
@@ -26,6 +27,7 @@ afterAll(async () => {
 beforeEach(async () => {
   await dbConnector.fillDatabase()
   mockId = await dbConnector.testUser()
+  mockPostId = await dbConnector.testPost()
 })
 
 afterEach(async () => {
@@ -35,15 +37,32 @@ afterEach(async () => {
 
 test("Server start", () => {})
 
-describe("GET api/auth", () => {
+describe("POST api/posts", () => {
   test("normal case", (done) => {
+    let inputText = "post body"
     request(server)
-      .get("/api/auth")
-      .send()
+      .post("/api/posts")
+      .send({
+        text: inputText,
+      })
       .expect(200)
       .expect((res) => {
-        res.body.name = "bill"
-        res.body.email = "bill@removeme.com"
+        res.body.text = inputText
+      })
+      .end((err) => {
+        if (err) return done(err)
+        return done()
+      })
+  })
+  test("no text case", (done) => {
+    request(server)
+      .post("/api/posts")
+      .send({
+        text: "",
+      })
+      .expect(400)
+      .expect((res) => {
+        res.body.error != null
       })
       .end((err) => {
         if (err) return done(err)
@@ -51,82 +70,60 @@ describe("GET api/auth", () => {
       })
   })
 })
-
-describe("POST api/auth", () => {
+describe("GET api/posts", () => {
   test("normal case", (done) => {
     request(server)
-      .post("/api/auth")
-      .send({
-        email: "bill@removeme.com",
-        password: "password123",
+      .get("/api/posts")
+      .send({})
+      .expect(200)
+      .end((err) => {
+        if (err) return done(err)
+        return done()
       })
+  })
+})
+describe("GET api/posts/:id", () => {
+  test("normal case", (done) => {
+    request(server)
+      .get(`/api/posts/${mockPostId}`)
+      .send({})
       .expect(200)
       .expect((res) => {
-        res.body.token != null
+        res.body.text = "dummy text post target"
+        res.body.name = "bill"
       })
       .end((err) => {
         if (err) return done(err)
         return done()
       })
   })
-  test("missing password case", (done) => {
+  test("bad id case", (done) => {
     request(server)
-      .post("/api/auth")
-      .send({
-        email: "bill@removeme.com",
-      })
-      .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
+      .get(`/api/posts/invalidPostId`)
+      .send({})
+      .expect(404)
       .end((err) => {
         if (err) return done(err)
         return done()
       })
   })
-  test("bad email case", (done) => {
+})
+describe("DELETE api/posts/:id", () => {
+  test("normal case", (done) => {
     request(server)
-      .post("/api/auth")
-      .send({
-        email: "bill jenkins",
-        password: "password123",
-      })
-      .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
+      .delete(`/api/posts/${mockPostId}`)
+      .send({})
+      .expect(200)
       .end((err) => {
         if (err) return done(err)
         return done()
       })
   })
-  test("no user found case", (done) => {
+  test("bad id case", (done) => {
     request(server)
-      .post("/api/auth")
-      .send({
-        email: "alice@removeme.org",
-        password: "password123",
-      })
-      .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
-      .end((err) => {
-        if (err) return done(err)
-        return done()
-      })
-  })
-  test("mismatched password case", (done) => {
-    request(server)
-      .post("/api/auth")
-      .send({
-        email: "bill@removeme.com",
-        password: "wrongPassword",
-      })
-      .expect(400)
-      .expect((res) => {
-        res.body.error != null
-      })
+      .delete(`/api/posts/invalidPostId`)
+      .send({})
+      .expect(404)
       .end((err) => {
         if (err) return done(err)
         return done()
