@@ -7,7 +7,7 @@ class errorHandler {
     res.status(500).send(config.get("errorResponses.serverError"))
   }
 
-  // Error handler for when there could be a object not found error in a catch block
+  // Error handler for when there could be an object not found error in a catch block
   static serverObjectId(res, err, ObjectName) {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: `${ObjectName} not found` })
