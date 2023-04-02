@@ -42,9 +42,6 @@ describe("PUT api/posts/like/:id", () => {
     request(server)
       .put(`/api/posts/like/${mockPostId}`)
       .send({})
-      .expect((res) => {
-        console.log(res.body)
-      })
       .expect(200)
       .end((err) => {
         if (err) return done(err)
@@ -52,5 +49,20 @@ describe("PUT api/posts/like/:id", () => {
       })
   })
 
-  // TODO: test case where post already liked
+  test("double liking case", (done) => {
+    request(server)
+      .put(`/api/posts/like/${mockPostId}`)
+      .send({})
+      .expect(200)
+      .end(() => {
+        request(server)
+          .put(`/api/posts/like/${mockPostId}`)
+          .send({})
+          .expect(400)
+          .end((err) => {
+            if (err) return done(err)
+            return done()
+          })
+      })
+  })
 })
