@@ -5,7 +5,7 @@ const dbConnector = require("../../db-connector")
 let server
 
 beforeAll(async () => {
-  server = app.listen(5004, (err) => {
+  server = app.listen(0, (err) => {
     if (err) return err
   })
   await dbConnector.connect()
