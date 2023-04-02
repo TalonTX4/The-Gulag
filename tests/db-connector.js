@@ -73,6 +73,15 @@ const fillDatabase = async () => {
     user: user.id,
   })
 
+  const newComment = {
+    text: "dummy text comment target",
+    name: user.name,
+    avatar: user.avatar,
+    user: user.id,
+  }
+
+  newPost.comments.unshift(newComment)
+
   await newPost.save()
 }
 
@@ -86,6 +95,11 @@ const testUser = async () => {
   return testUser.id
 }
 
+const testComment = async () => {
+  let testComment = await Post.findOne({ name }).select("comment")
+  return testComment.id
+}
+
 module.exports = {
   fillDatabase,
   connect,
@@ -93,4 +107,5 @@ module.exports = {
   clearDatabase,
   testUser,
   testPost,
+  testComment,
 }
