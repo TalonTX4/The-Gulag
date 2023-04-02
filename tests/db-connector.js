@@ -100,6 +100,19 @@ const testComment = async () => {
   return testComment.id
 }
 
+const testLike = async () => {
+  let post
+  let user
+  try {
+    post = await Post.findOne({ name })
+    user = await User.findOne({ name })
+  } catch (err) {
+    console.log(err)
+  }
+  post.likes.unshift({ user: user.id })
+
+  await post.save()
+}
 module.exports = {
   fillDatabase,
   connect,
@@ -108,4 +121,5 @@ module.exports = {
   testUser,
   testPost,
   testComment,
+  testLike,
 }
