@@ -5,7 +5,7 @@ const Post = require("../../../models/Post")
 const errorHandler = require("../../../misc/errors")
 const router = express.Router()
 
-// @route  : PUT api/posts/unlike.js/:id
+// @route  : PUT api/posts/unlike/:id
 // @desc   : Unlike a post
 // @access : Private
 router.put("/:id", jwtVerify, async (req, res) => {
