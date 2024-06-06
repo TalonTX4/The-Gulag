@@ -44,11 +44,6 @@ Run `npm test` in the root directory
   - [WebStorm](https://www.jetbrains.com/webstorm/) - Used
     as the primary IDE for the durration of the project
 
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
   - **Joseph Paier** - *Constructed the website front to back* -
